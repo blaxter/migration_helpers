@@ -15,30 +15,30 @@ FEATURES
 
 Examples
 ========
-`
-  def self.up
-    create_table :profiles do |t|
-      t.string  :first_name
-      t.string  :last_name
-      t.string  :email
-      t.boolean :is_disabled
-    end
-    create_table :users do |t|
-      t.string  :login
-      t.string  :crypted_password
-      t.string  :salt
-      t.integer :profile_id
+
+    def self.up
+      create_table :profiles do |t|
+        t.string  :first_name
+        t.string  :last_name
+        t.string  :email
+        t.boolean :is_disabled
+      end
+      create_table :users do |t|
+        t.string  :login
+        t.string  :crypted_password
+        t.string  :salt
+        t.integer :profile_id
+      end
+
+      foreign_key :users, :profile_id, :profiles
     end
 
-    foreign_key :users, :profile_id, :profiles
-  end
+    def self.down
+      drop_foreign_key :users, :profile_id
+      drop_table       :users
+      drop_table       :profiles
+    end
 
-  def self.down
-    drop_foreign_key :users, :profile_id
-    drop_table       :users
-    drop_table       :profiles
-  end
-`
 
 REQUIREMENTS
 ============
