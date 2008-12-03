@@ -2,35 +2,62 @@ Mysql-migration-helpers
     by Jesús GS <blaxter@gmail.com>
     http://github.com/blaxter/mysql-migration-helpers
 
-== DESCRIPTION:
+DESCRIPTION
+===========
 
 Helpers for migrations of ActiveRecord for dealing with foreign keys and primary keys.
 
-== FEATURES/PROBLEMS:
+FEATURES
+========
 
- * foreign keys
-   * foreign_key(table, field, referenced_table, referenced_field, on_cascade)
-   * drop_foreign_key(table, field)
- * primary keys
-   * primary_key(table, field)
+ * **foreign keys**
+   * *foreign_key(table, field, referenced_table, referenced_field, on_cascade)*
+   * *drop_foreign_key(table, field)*
+ * **primary keys**
+   * *primary_key(table, field)*
 
-== SYNOPSIS:
+Examples
+========
 
-  FIXME (code sample of usage)
+  def self.up
+    create_table :profiles do |t|
+      t.string  :first_name
+      t.string  :last_name
+      t.string  :email
+      t.boolean :is_disabled
+    end
+    create_table :users do |t|
+      t.string  :login
+      t.string  :crypted_password
+      t.string  :salt
+      t.integer :profile_id
+    end
 
-== REQUIREMENTS:
+    foreign_key :users, :profile_id, :profiles
+  end
 
-* It's been tested with Mysql adapter and Jdbcmysql adapter
+  def self.down
+    drop_foreign_key :users, :profile_id
+    drop_table       :users
+    drop_table       :profiles
+  end
 
-== INSTALL:
+REQUIREMENTS
+============
 
-* script/plugin install git://github.com/blaxter/mysql-migration-helpers.git
+ * It's been tested with Mysql adapter and Jdbcmysql adapter
 
-== LICENSE:
+INSTALL
+=======
+
+ * script/plugin install git://github.com/blaxter/mysql-migration-helpers.git
+
+LICENSE
+=======
 
 (The MIT License)
 
-Copyright (c) 2008 Jesús García Sáez <blaxter@gmail.com>
+Copyright (c) 2008 Jesús García Sáez <jgarcia@warp.es>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
