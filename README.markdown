@@ -1,7 +1,3 @@
-Mysql-migration-helpers
-    by Jesús GS <blaxter@gmail.com>
-    http://github.com/blaxter/mysql-migration-helpers
-
 DESCRIPTION
 ===========
 
@@ -18,7 +14,7 @@ FEATURES
 
 Examples
 ========
-
+`
   def self.up
     create_table :profiles do |t|
       t.string  :first_name
@@ -41,6 +37,7 @@ Examples
     drop_table       :users
     drop_table       :profiles
   end
+`
 
 REQUIREMENTS
 ============
