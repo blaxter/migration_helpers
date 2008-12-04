@@ -9,15 +9,16 @@ module MysqlMigrationHelpers
    # cascade: delete & update on cascade?
    def foreign_key(table, field, referenced_table, referenced_field = :id, cascade = true)
       execute "ALTER TABLE #{table} ADD CONSTRAINT #{constraint_name(table, field)}
-       FOREIGN KEY #{constraint_name(table, field)} (#{field})
-       REFERENCES #{referenced_table}(#{referenced_field})
-       #{(cascade ? 'ON DELETE CASCADE ON UPDATE CASCADE' : '')}"
+               FOREIGN KEY #{constraint_name(table, field)} (#{field_list(field)})
+               REFERENCES #{referenced_table}(#{field_list(referenced_field)})
+               #{(cascade ? 'ON DELETE CASCADE ON UPDATE CASCADE' : '')}"
    end
 
-   # Drops a foreign key from +table+.+field+ that has been created before with foreign_key method
+   # Drops a foreign key from +table+.+field+ that has been created before with
+   # foreign_key method
    #
    # table: The table name
-   # field: A field of the table
+   # field: A field (or array of fields) of the table
    def drop_foreign_key(table, field)
       execute "ALTER TABLE #{table} DROP FOREIGN KEY #{constraint_name(table, field)}"
    end
@@ -25,9 +26,9 @@ module MysqlMigrationHelpers
    # Creates a primary key for +table+, which right now HAS NOT primary key defined
    #
    # table: The table name
-   # field: A field of the table
+   # field: A field (or array of fields) of the table that will be part of the primary key
    def primary_key(table, field)
-      execute "ALTER TABLE #{table} ADD PRIMARY KEY(#{field})"
+      execute "ALTER TABLE #{table} ADD PRIMARY KEY(#{field_list(field)})"
    end
 
    private
@@ -37,7 +38,14 @@ module MysqlMigrationHelpers
    # table: The table name
    # field: A field of the table
    def constraint_name(table, field)
-      "fk_#{table}_#{field}"
+      "fk_#{table}_#{field_list_name(field)}"
    end
 
+   def field_list(fields)
+      fields.is_a?(Array) ? fields.join(',') : fields
+   end
+
+   def field_list_name(fields)
+      fields.is_a?(Array) ? fields.join('_') : fields
+   end
 end

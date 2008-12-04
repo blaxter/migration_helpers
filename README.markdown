@@ -8,13 +8,15 @@ FEATURES
 ========
 
  * **foreign keys**
-   * *foreign_key(table, field, referenced_table, referenced_field, on_cascade)*
-   * *drop_foreign_key(table, field)*
+    * foreign_key(table, field, referenced_table, referenced_field, on_cascade)
+    * drop_foreign_key(table, field)
  * **primary keys**
-   * *primary_key(table, field)*
+    * primary_key(table, field)
 
 Examples
 ========
+
+Typical use:
 
     def self.up
       create_table :profiles do |t|
@@ -38,6 +40,19 @@ Examples
       drop_table       :users
       drop_table       :profiles
     end
+
+
+Also, if we don't defined a common :id (exactly it's rails who define it), we should create a primary key:
+
+    def self.up
+      create_table :foo, :id => false do |t|
+         t.string :foo, :bar
+      end
+
+      primary_key :foo, [ :foo, :bar ]
+   end
+
+In the parameter where a field is required (like the second parameter in *primary_key*) you can specified and symbol (or string) or an array of symbols (or strings).
 
 
 REQUIREMENTS
