@@ -63,7 +63,7 @@ REQUIREMENTS
 INSTALL
 =======
 
- * script/plugin install git://github.com/blaxter/mysql-migration-helpers.git
+ * script/plugin install git://github.com/blaxter/migration_helpers.git
 
 LICENSE
 =======

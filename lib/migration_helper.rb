@@ -1,4 +1,4 @@
-module MysqlMigrationHelpers
+module MigrationConstraintHelpers
 
    # Creates a foreign key from +table+.+field+ against referenced_table.referenced_field
    #
