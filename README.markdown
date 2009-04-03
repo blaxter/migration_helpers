@@ -50,7 +50,7 @@ Also, if we don't defined a common :id (exactly it's rails who define it), we sh
       end
 
       primary_key :foo, [ :foo, :bar ]
-   end
+    end
 
 In the parameter where a field is required (like the second parameter in *primary_key*) you can specified and symbol (or string) or an array of symbols (or strings).
 
