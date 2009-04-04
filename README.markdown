@@ -4,6 +4,8 @@ DESCRIPTION
 
 Helpers for migrations of ActiveRecord for dealing with foreign keys and primary keys.
 
+Also it's a monkey patching for adding, only for Mysql, a unsigned options for integers columns
+
 FEATURES
 ========
 
@@ -12,6 +14,8 @@ FEATURES
     * drop_foreign_key(table, field)
  * **primary keys**
     * primary_key(table, field)
+ * **unsigned int**
+    * t.integer :number, :unsigned => true
 
 Examples
 ========
@@ -23,6 +27,7 @@ Typical use:
         t.string  :first_name
         t.string  :last_name
         t.string  :email
+        t.integer :age,        :unsigned => true
         t.boolean :is_disabled
       end
       create_table :users do |t|
