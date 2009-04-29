@@ -1,4 +1,8 @@
-require 'migration_helper'
+LIB_PATH = File.join(
+    File.expand_path( File.dirname __FILE__ ), 'lib'
+  )
+
+require File.join( LIB_PATH, 'migration_helper' )
 
 ActiveRecord::ConnectionAdapters::AbstractAdapter.
   send :include, MigrationConstraintHelpers
