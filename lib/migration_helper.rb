@@ -31,6 +31,41 @@ module MigrationConstraintHelpers
       execute "ALTER TABLE #{table} ADD PRIMARY KEY(#{field_list(field)})"
    end
 
+   # Execute REPAIR TABLE in each table given as parameter or in all of them
+   # if none is indicated
+   #
+   # tables: list of tables
+   def repair_tables(*tables)
+      ActiveRecord::Migration.say("Reparing tables...", true)
+      each_table do |table|
+         if tables.empty? || tables.include?(table.to_s)
+            ActiveRecord::Migration.say(table, true)
+            execute "REPAIR TABLE #{table}"
+         end
+      end
+   end
+
+   # Execute OPTIMIZE TABLE in each table given as parameter or in all of them
+   # if none is indicated
+   #
+   # tables: list of tables
+   def optimize_tables(*tables)
+      each_table do |table|
+         if tables.empty? || tables.include?(table.to_s)
+            ActiveRecord::Migration.say(table, true)
+            execute "OPTIMIZE TABLE #{table}"
+         end
+      end
+   end
+
+   # Yields for each table defined in the database
+   # The name of the table is given as parameter
+   def each_table
+      execute("SHOW TABLES").each do |a|
+         yield a.values.first
+      end
+   end
+
    private
 
    # Creates a constraint name for table and field given as parameters
@@ -48,4 +83,5 @@ module MigrationConstraintHelpers
    def field_list_name(fields)
       fields.is_a?(Array) ? fields.join('_') : fields
    end
+
 end

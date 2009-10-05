@@ -2,16 +2,24 @@
 DESCRIPTION
 ===========
 
-Helpers for migrations of ActiveRecord for dealing with foreign keys and primary keys.
+Helpers for migrations of ActiveRecord for dealing with foreign keys and primary keys and more stuff.
 
 FEATURES
 ========
 
  * **foreign keys**
-    * foreign_key(table, field, referenced_table, referenced_field, on_cascade)
-    * drop_foreign_key(table, field)
+    * `foreign_key(table, field, referenced_table, referenced_field, on_cascade)`
+    * `drop_foreign_key(table, field)`
  * **primary keys**
-    * primary_key(table, field)
+    * `primary_key(table, field)`
+ * **repair_tables**
+   * `repair_tables :users, :clients`
+   * `repair_tables` (all tables)
+ * **optimize_tables**
+   * `optimize_tables :readings, :jobs`
+   * `optimize_tables` (all tables)
+ * **each_table**
+   * Yields each table name
 
 Examples
 ========
@@ -33,6 +41,15 @@ Typical use:
       end
 
       foreign_key :users, :profile_id, :profiles
+
+      repair_tables
+      optimize_tables
+
+      each_table do |name|
+        say_with_time "Some operation with #{name}" do
+          #execute "..... #{name}"
+        end
+      end
     end
 
     def self.down
