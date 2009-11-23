@@ -61,8 +61,9 @@ module MigrationConstraintHelpers
    # Yields for each table defined in the database
    # The name of the table is given as parameter
    def each_table
-      execute("SHOW TABLES").each do |a|
-         yield a.values.first
+      execute("SHOW TABLES").each do |row|
+         a = row.is_a?(Hash) ? row.values : row
+         yield a.first
       end
    end
 
