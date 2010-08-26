@@ -4,5 +4,4 @@ LIB_PATH = File.join(
 
 require File.join( LIB_PATH, 'migration_helper' )
 
-ActiveRecord::ConnectionAdapters::AbstractAdapter.
-  send :include, MigrationConstraintHelpers
+ActiveRecord::Migration.extend MigrationConstraintHelpers
