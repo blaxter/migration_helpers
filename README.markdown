@@ -12,6 +12,7 @@ FEATURES
     * `drop_foreign_key(table, field)`
  * **primary keys**
     * `primary_key(table, field)`
+    * `change_primary_key(table, field)`
  * **repair_tables**
    * `repair_tables :users, :clients`
    * `repair_tables` (all tables)

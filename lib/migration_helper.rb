@@ -31,6 +31,14 @@ module MigrationConstraintHelpers
       execute "ALTER TABLE #{table} ADD PRIMARY KEY(#{field_list(field)})"
    end
 
+   # Modifies the primary key of +table+, which right now has already a primary key defined
+   #
+   # table: The table name
+   # field: A field (or array of fields) of the table that will be part of the primary key
+   def change_primary_key(table, field)
+      execute "ALTER TABLE #{table} DROP PRIMARY KEY, ADD PRIMARY KEY(#{field_list(field)})"
+   end
+
    # Execute REPAIR TABLE in each table given as parameter or in all of them
    # if none is indicated
    #
