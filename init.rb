@@ -3,5 +3,3 @@ LIB_PATH = File.join(
   )
 
 require File.join( LIB_PATH, 'migration_helpers' )
-
-ActiveRecord::Migration.extend MigrationConstraintHelpers
