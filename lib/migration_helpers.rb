@@ -94,3 +94,5 @@ module MigrationConstraintHelpers
    end
 
 end
+
+ActiveRecord::Migration.extend(MigrationConstraintHelpers)
